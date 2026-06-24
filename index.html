@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brainstorm Hub AI</title>
+<style>
+body{font-family:Arial,sans-serif;background:#0f172a;color:white;max-width:900px;margin:auto;padding:30px}
+.card{background:#1e293b;padding:20px;border-radius:16px;margin-top:15px}
+input,textarea{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:none;background:#334155;color:white}
+button{padding:12px 16px;border:none;border-radius:10px;cursor:pointer}
+.primary{background:#38bdf8}
+</style>
+</head>
+<body>
+<h1>🧠 Brainstorm Hub AI</h1>
+<div class="card">
+<input id="title" placeholder="Idea name">
+<textarea id="description" rows="6" placeholder="Describe your idea"></textarea>
+<button class="primary" onclick="analyzeIdea()">Analyze Idea</button>
+</div>
+<div class="card"><pre id="analysis">Run analysis...</pre></div>
+<script>
+async function analyzeIdea(){
+ const response = await fetch('/api/analyze',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+   title:document.getElementById('title').value,
+   description:document.getElementById('description').value
+  })
+ });
+ const data = await response.json();
+ document.getElementById('analysis').textContent = data.analysis || 'No response';
+}
+</script>
+</body>
+</html>
